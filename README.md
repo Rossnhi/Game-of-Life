@@ -5,6 +5,6 @@ Game of life is a cellular automata developed by the late John Conway. After sev
   2. Any dead cell with three live neighbours becomes a live cell.
   3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 
-[This](https://rossnhi.github.io/Pi-Collisions/) is a mini project inspired by Daniel shiffman and Grant Sanderson from the youtube channel 3blue1brown.
+[This](https://rossnhi.github.io/Game-of-Life/) is where a playable version is hosted.
 
 Visit [this link to numberphile's video](https://youtu.be/R9Plq-D1gEk) for an *interesting* commentary by John connway himself on the Game of Life!
