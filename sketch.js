@@ -3,8 +3,6 @@ let row;
 let col;
 let run = false;
 let board = [];
-let boardCopy = [];
-let runButton;
 
 function setup() {
   
@@ -15,7 +13,6 @@ function setup() {
   heading.style("padding", "4px");
 
   createCanvas(1300, 700);
-  background(235);
   row = height/gridScale;
   col = width/gridScale;
   
@@ -39,6 +36,9 @@ function setup() {
   gliderGunButton.position(width + 5, 200);
   gliderGunButton.mousePressed(gliderGun);
 
+  source = createA("https://github.com/Rossnhi/Game-of-Life","Scource code");
+  source.position(width + 5, 225);
+
   
   
   for (let i = 0; i < col; i++){
@@ -52,7 +52,7 @@ function setup() {
 
 function draw() {
   frameRate(10);
-  background(235);
+  background(160, 160, 20);
   drawGrid();
   drawBoard();
   if (run == false){
