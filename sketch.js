@@ -52,7 +52,8 @@ function setup() {
 
 function draw() {
   frameRate(10);
-  background(160, 160, 20);
+  background(255);
+  background(160, 160, 20, 170);
   drawGrid();
   drawBoard();
   if (run == false){
