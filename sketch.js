@@ -1,44 +1,28 @@
-let gridScale = 10;
+let gridScale = 5;
 let row;
 let col;
 let run = false;
 let board = [];
+let boardCopy = [];
+let runButton;
 
 function setup() {
-  
-  heading = createElement("h1","The Game of Life")
-  heading.style("text-align","center");
-  heading.style("font-size", "25pt");
-  heading.style("background-color", "lavender");
-  heading.style("padding", "4px");
-
-  createCanvas(1300, 700);
+  createCanvas(600, 600);
+  background(235);
   row = height/gridScale;
   col = width/gridScale;
   
   runButton = createButton("Run/Stop");
-  runButton.position(width + 5,100);
+  runButton.position(width,0);
   runButton.mousePressed(toggleRun);
   
   clearButton = createButton("Clear");
-  clearButton.position(width + 5,125);
+  clearButton.position(width,25);
   clearButton.mousePressed(clearScreen);
 
   randomButton = createButton("Random");
-  randomButton.position(width + 5, 150);
+  randomButton.position(width, 50);
   randomButton.mousePressed(randomPattern);
-
-  gliderButton = createButton("Glider");
-  gliderButton.position(width + 5, 175);
-  gliderButton.mousePressed(glider);
-
-  gliderGunButton = createButton("Glider Gun");
-  gliderGunButton.position(width + 5, 200);
-  gliderGunButton.mousePressed(gliderGun);
-
-  source = createA("https://github.com/Rossnhi/Game-of-Life","Scource code");
-  source.position(width + 5, 225);
-
   
   
   for (let i = 0; i < col; i++){
@@ -52,8 +36,7 @@ function setup() {
 
 function draw() {
   frameRate(10);
-  background(255);
-  background(160, 160, 20, 170);
+  background(235);
   drawGrid();
   drawBoard();
   if (run == false){
@@ -71,21 +54,27 @@ function updateBoard(){
   let alive;
   for (let i = 0; i < col; i++){
     for (let j = 0; j < row; j++){
-      alive = liveNeighbours(i,j);
-      if (board[i][j] == 1){
-        if (alive < 2 || alive > 3){
-          boardCopy[i][j] = 0;
-        }
-        else{
-          boardCopy[i][j] = board[i][j];
-        }
-      }
+      if (j < row - 1 && board[i][j+1] == 1){
+        boardCopy[i][j] = 1;
+      } 
       else{
-        if ( alive == 3){
-          boardCopy[i][j] = 1;
+        alive = liveNeighbours(i,j);
+        if (board[i][j] == 1){
+          if (alive < 2 || alive > 3){
+            boardCopy[i][j] = 0;
+          }
+          else{
+            boardCopy[i][j] = board[i][j];
+          }
+
         }
         else{
-          boardCopy[i][j] = board[i][j];
+          if ( alive == 3 ){
+            boardCopy[i][j] = 1;
+          }
+          else{
+            boardCopy[i][j] = board[i][j];
+          }
         }
       }
     }
@@ -169,57 +158,4 @@ function randomPattern(){
       board[i][j] = random([0,1]);
     }
   }
-}
-function glider(){
-  clearScreen();
-  let i = col/2;
-  let j = row/2 - 5;
-  board[i][j] = 1;
-  board[i][j + 1] = 1;
-  board[i][j + 2] = 1;
-  board[i][j + 2] = 1;
-  board[i-1][j + 2] = 1;
-  board[i-2][j + 1] = 1;
-}
-function gliderGun(){
-  clearScreen();
-  let i = 40;
-  let j = 20;
-  board[i][j] = 1;
-  board[i + 1][j] = 1;
-  board[i + 1][j + 1] = 1;
-  board[i][j + 1] = 1;
-  board[i + 10][j] = 1;
-  board[i + 10][j + 1] = 1;
-  board[i + 10][j + 2] = 1;
-  board[i + 11][j - 1] = 1;
-  board[i + 12][j - 2] = 1;
-  board[i + 13][j - 2] = 1;
-  board[i + 11][j + 3] = 1;
-  board[i + 12][j + 4] = 1;
-  board[i + 13][j + 4] = 1;
-  board[i + 14][j + 1] = 1;
-  board[i + 15][j - 1] = 1;
-  board[i + 15][j + 3] = 1;
-  board[i + 16][j] = 1;
-  board[i + 16][j + 1] = 1;
-  board[i + 16][j + 2] = 1;
-  board[i + 17][j + 1] = 1;
-  board[i + 20][j] = 1;
-  board[i + 20][j - 1] = 1;
-  board[i + 20][j - 2] = 1;
-  board[i + 21][j] = 1;
-  board[i + 21][j - 1] = 1;
-  board[i + 21][j - 2] = 1;
-  board[i + 22][j + 1] = 1;
-  board[i + 22][j - 3] = 1;
-  board[i + 24][j + 1] = 1;
-  board[i + 24][j - 3] = 1;
-  board[i + 24][j + 2] = 1;
-  board[i + 24][j - 4] = 1;
-  board[i + 34][j - 1] = 1;
-  board[i + 34][j - 2] = 1;
-  board[i + 35][j - 1] = 1;
-  board[i + 35][j - 2] = 1;
-
 }
