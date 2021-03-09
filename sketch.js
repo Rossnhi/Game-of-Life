@@ -53,7 +53,7 @@ function setup() {
 function draw() {
   frameRate(10);
   background(255);
-  background(160, 160, 20, 170);
+  background(30, 180, 180, 120);
   drawGrid();
   drawBoard();
   if (run == false){
@@ -96,7 +96,8 @@ function drawBoard(){
   for (let i = 0; i < col; i++){
     for (let j = 0; j < row; j++){
       if (board[i][j] == 1){
-        fill(0)
+        stroke(255,80,90);
+        fill(247,170,146);
         rect(i * gridScale, j * gridScale, gridScale, gridScale);
       }
     }
@@ -104,11 +105,12 @@ function drawBoard(){
 }
 function highLight(){
   if (mouseX < width && mouseX > 0 && mouseY < height && mouseY > 0){
-    fill(100, 200);
+    fill(100, 120);
     rect(Math.floor(mouseX/gridScale) * gridScale, Math.floor(mouseY/gridScale) * gridScale, gridScale, gridScale);
   }
 }
 function drawGrid(){
+  stroke(0, 180, 180);
   for (let i = 1; i < col; i++){
     line(i * gridScale, 0, i * gridScale, height);
   }
