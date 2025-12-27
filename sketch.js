@@ -1,46 +1,32 @@
 let gridScale = 10;
 let row;
 let col;
-let run = false;
-let board = [];
+let run;
+let board;
 
 function setup() {
+  createCanvas(windowWidth * 0.8, windowHeight * 0.8);
+  row = parseInt(height/gridScale);
+  col = parseInt(width/gridScale);
   
-  heading = createElement("h1","The Game of Life")
-  heading.style("text-align","center");
-  heading.style("font-size", "25pt");
-  heading.style("background-color", "lavender");
-  heading.style("padding", "4px");
-
-  createCanvas(1300, 700);
-  row = height/gridScale;
-  col = width/gridScale;
+  runButton = document.getElementById("runStop");
+  runButton.addEventListener("click", toggleRun);
   
-  runButton = createButton("Run/Stop");
-  runButton.position(width + 5,100);
-  runButton.mousePressed(toggleRun);
-  
-  clearButton = createButton("Clear");
-  clearButton.position(width + 5,125);
-  clearButton.mousePressed(clearScreen);
+  clearButton = document.getElementById("clear");
+  clearButton.addEventListener("click", clearScreen);
 
-  randomButton = createButton("Random");
-  randomButton.position(width + 5, 150);
-  randomButton.mousePressed(randomPattern);
+  randomButton = document.getElementById("random");
+  randomButton.addEventListener("click", randomPattern);
 
-  gliderButton = createButton("Glider");
-  gliderButton.position(width + 5, 175);
-  gliderButton.mousePressed(glider);
+  gliderButton = document.getElementById("glider");
+  gliderButton.addEventListener("click", glider);
 
-  gliderGunButton = createButton("Glider Gun");
-  gliderGunButton.position(width + 5, 200);
-  gliderGunButton.mousePressed(gliderGun);
+  gliderGunButton = document.getElementById("gliderGun");
+  gliderGunButton.addEventListener("click", gliderGun);
 
-  source = createA("https://github.com/Rossnhi/Game-of-Life","Scource code");
-  source.position(width + 5, 225);
-
-  
-  
+  run = false;
+  runButton.innerText  = "Run";
+  board = [];
   for (let i = 0; i < col; i++){
     board.push([]);
     for (let j = 0; j < row; j++){
@@ -52,8 +38,7 @@ function setup() {
 
 function draw() {
   frameRate(10);
-  background(255);
-  background(30, 180, 180, 120);
+  background(color(255, 212, 29));
   drawGrid();
   drawBoard();
   if (run == false){
@@ -96,8 +81,8 @@ function drawBoard(){
   for (let i = 0; i < col; i++){
     for (let j = 0; j < row; j++){
       if (board[i][j] == 1){
-        stroke(255,80,90);
-        fill(247,170,146);
+        stroke(color(255, 162, 64));
+        fill(color(255, 162, 64));
         rect(i * gridScale, j * gridScale, gridScale, gridScale);
       }
     }
@@ -110,7 +95,7 @@ function highLight(){
   }
 }
 function drawGrid(){
-  stroke(0, 180, 180);
+  stroke(color(255, 162, 64));
   for (let i = 1; i < col; i++){
     line(i * gridScale, 0, i * gridScale, height);
   }
@@ -125,6 +110,7 @@ function mousePressed(){
 }
 function toggleRun(){
   run = !(run);
+  runButton.innerText = run ? "Stop" : "Run";
   //runButton.style('background-color', color(((1-run) * 255) + (run * 120)));
 }
 function clearScreen(){
@@ -134,6 +120,7 @@ function clearScreen(){
     }
   }
   run = false;
+  runButton.innerText = run ? "Stop" : "Run";
 }
 function liveNeighbours(i, j){
   let live = 0;
@@ -166,6 +153,7 @@ function liveNeighbours(i, j){
 }
 function randomPattern(){
   run = false;
+  runButton.innerText = run ? "Stop" : "Run";
   for (let i = 0; i < col; i++){
     for (let j = 0; j < row; j++){
       board[i][j] = random([0,1]);
@@ -174,8 +162,8 @@ function randomPattern(){
 }
 function glider(){
   clearScreen();
-  let i = col/2;
-  let j = row/2 - 5;
+  let i = parseInt(col/2);
+  let j = parseInt(row/2 - 5);
   board[i][j] = 1;
   board[i][j + 1] = 1;
   board[i][j + 2] = 1;
@@ -185,8 +173,8 @@ function glider(){
 }
 function gliderGun(){
   clearScreen();
-  let i = 40;
-  let j = 20;
+  let i = parseInt(col/4);
+  let j = parseInt(row/2 - 5);
   board[i][j] = 1;
   board[i + 1][j] = 1;
   board[i + 1][j + 1] = 1;
@@ -224,4 +212,8 @@ function gliderGun(){
   board[i + 35][j - 1] = 1;
   board[i + 35][j - 2] = 1;
 
+}
+
+function windowResized() {
+  setup();
 }
